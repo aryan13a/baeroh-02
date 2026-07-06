@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start a Conversation | Baeroh Design Studio</title>
+  <meta name="description" content="Reach out to Baeroh. Start a conversation about your residential, workplace, hospitality, or commercial design project in Jaipur.">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Global Header / Nav -->
+  <header>
+    <div class="container nav-container">
+      <a href="index.html" class="logo-link">
+        <img src="assets/logo.png" alt="Baeroh Design Studio Logo" class="logo-img">
+      </a>
+      
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="studio.html" class="nav-link">Studio</a>
+        <a href="work.html" class="nav-link">Work</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="begin.html" class="nav-link active">Begin</a>
+      </nav>
+      
+      <button class="mobile-nav-toggle" aria-label="Toggle Navigation Menu">
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Overlay Menu -->
+  <div class="mobile-nav-menu">
+    <a href="index.html" class="mobile-nav-item">Home</a>
+    <a href="studio.html" class="mobile-nav-item">Studio</a>
+    <a href="work.html" class="mobile-nav-item">Work</a>
+    <a href="services.html" class="mobile-nav-item">Services</a>
+    <a href="begin.html" class="mobile-nav-item" style="color: var(--color-cinnamon);">Begin a Conversation</a>
+  </div>
+
+  <!-- Contact Hero / Form Page -->
+  <section class="reveal" style="padding-top: 150px;">
+    <div class="container">
+      <div class="contact-container">
+        
+        <!-- Info Column -->
+        <div class="contact-info">
+          <span class="caption-label" style="margin-bottom: 1.5rem;">Contact</span>
+          <h1 class="hero-title" style="font-size: clamp(2rem, 3.8vw, 3.8rem); margin-bottom: 2rem; line-height: 1.15;">
+            Every meaningful project begins with a conversation.
+          </h1>
+          <p class="body-copy" style="font-size: 1.1rem; line-height: 1.8; color: var(--color-olive); margin-bottom: 2rem;">
+            We'll begin by understanding your project, your aspirations and what matters most to you. If we're the right fit, we'll guide you through every step with clarity, collaboration and care.
+          </p>
+          
+          <div class="contact-step-list">
+            <span class="caption-label">The Journey Ahead</span>
+            
+            <!-- Step 01 -->
+            <div class="contact-step">
+              <span class="contact-step-num">01</span>
+              <div class="contact-step-text">
+                <h3>A Conversation</h3>
+                <p class="body-copy" style="font-size: 0.875rem;">Understanding your project, aspirations and goals.</p>
+              </div>
+            </div>
+            
+            <!-- Step 02 -->
+            <div class="contact-step">
+              <span class="contact-step-num">02</span>
+              <div class="contact-step-text">
+                <h3>A Proposal</h3>
+                <p class="body-copy" style="font-size: 0.875rem;">Defining the scope, process and next steps.</p>
+              </div>
+            </div>
+            
+            <!-- Step 03 -->
+            <div class="contact-step">
+              <span class="contact-step-num">03</span>
+              <div class="contact-step-text">
+                <h3>The Journey</h3>
+                <p class="body-copy" style="font-size: 0.875rem;">Designing together with clarity, collaboration and care.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Form Column -->
+        <div class="contact-form-wrapper">
+          <span class="caption-label" style="display: block; margin-bottom: 2rem;">Inquire</span>
+          
+          <form id="contact-form">
+            <!-- Name -->
+            <div class="form-group">
+              <label for="form-name" class="form-label">Full Name</label>
+              <input type="text" id="form-name" class="form-input" required placeholder="Your name">
+            </div>
+            
+            <!-- Email -->
+            <div class="form-group">
+              <label for="form-email" class="form-label">Email Address</label>
+              <input type="email" id="form-email" class="form-input" required placeholder="name@domain.com">
+            </div>
+            
+            <!-- Phone -->
+            <div class="form-group">
+              <label for="form-phone" class="form-label">Phone Number</label>
+              <input type="tel" id="form-phone" class="form-input" placeholder="+91 00000 00000">
+            </div>
+            
+            <!-- Project Type -->
+            <div class="form-group">
+              <label for="form-project-type" class="form-label">Project Type</label>
+              <select id="form-project-type" class="form-select" required>
+                <option value="" disabled selected>Select project category</option>
+                <option value="residential">Residential — Home, Apartment, Villa</option>
+                <option value="workplace">Workplace — Studio, Office, Workspace</option>
+                <option value="hospitality">Hospitality — Restaurant, Café, Hotel</option>
+                <option value="commercial">Commercial — Retail, Wellness, Experience</option>
+              </select>
+            </div>
+            
+            <!-- Message -->
+            <div class="form-group">
+              <label for="form-message" class="form-label">Tell us about your project</label>
+              <textarea id="form-message" class="form-textarea" required placeholder="What are your aspirations for the space?"></textarea>
+            </div>
+            
+            <div style="margin-top: 3rem;">
+              <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Start a Conversation</button>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <h2 class="font-serif">BAEROH</h2>
+          <p class="body-copy" style="font-size: 0.875rem;">Interior Architecture & Design</p>
+          <p class="body-copy" style="font-size: 0.875rem; margin-top: 0.25rem;">Jaipur, Rajasthan</p>
+        </div>
+        
+        <div class="footer-links">
+          <span class="caption-label footer-links-title">Navigation</span>
+          <a href="index.html" class="footer-link">Home</a>
+          <a href="studio.html" class="footer-link">Studio</a>
+          <a href="work.html" class="footer-link">Work</a>
+          <a href="services.html" class="footer-link">Services</a>
+          <a href="begin.html" class="footer-link">Begin</a>
+        </div>
+        
+        <div class="footer-contact">
+          <span class="caption-label footer-links-title">Connect</span>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+          <a href="mailto:hello@baeroh.com" class="footer-link">hello@baeroh.com</a>
+          <a href="tel:+919876543210" class="footer-link">+91 98765 43210</a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2026 Baeroh Design Studio. All rights reserved.</p>
+        <p class="footer-copyright" style="letter-spacing: 0.15em;">BAERO HAI.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

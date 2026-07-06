@@ -1,0 +1,8 @@
+# Temp extraction files
+extract.py
+color_spec.txt
+manuscript.txt
+
+# OS metadata
+.DS_Store
+Thumbs.db
