@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealElements.forEach(el => revealObserver.observe(el));
   }
 
-  // 5. CONTACT FORM HANDLING (Formspree & Spam Protection Integration)
+  // 5. CONTACT FORM HANDLING (Formspree Background Log & Direct WhatsApp Redirection)
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
@@ -129,10 +129,23 @@ document.addEventListener('DOMContentLoaded', () => {
         return; // silently discard submission
       }
       
-      submitBtn.innerHTML = 'SENDING...';
+      submitBtn.innerHTML = 'OPENING WHATSAPP...';
       submitBtn.disabled = true;
-      
-      // Formspree AJAX Submission
+
+      // Extract details
+      const name = contactForm.querySelector('#form-name').value;
+      const email = contactForm.querySelector('#form-email').value;
+      const phone = contactForm.querySelector('#form-phone').value;
+      const projectSelect = contactForm.querySelector('#form-project-type');
+      const projectType = projectSelect.options[projectSelect.selectedIndex].text;
+      const message = contactForm.querySelector('#form-message').value;
+
+      // Format WhatsApp Message
+      const whatsappMsg = `Hello Baeroh Design Studio,\n\nI would like to start a conversation about a project.\n\n*Name:* ${name}\n*Email:* ${email}\n*Phone:* ${phone}\n*Project Type:* ${projectType}\n*Message:* ${message}`;
+      const encodedMsg = encodeURIComponent(whatsappMsg);
+      const whatsappUrl = `https://wa.me/919509628808?text=${encodedMsg}`;
+
+      // Formspree AJAX Submission in the background (asynchronous, doesn't block redirection)
       const formData = new FormData(contactForm);
       const endpoint = contactForm.getAttribute('action') || 'https://formspree.io/f/mjkbwdol';
       
@@ -143,55 +156,19 @@ document.addEventListener('DOMContentLoaded', () => {
           'Accept': 'application/json'
         }
       })
-      .then(response => {
-        if (response.ok) {
-          submitBtn.innerHTML = 'THANK YOU';
-          submitBtn.style.backgroundColor = '#6B6857'; // Olive color for success
-          submitBtn.style.borderColor = '#6B6857';
-          
-          // Show confirmation message
-          const formStatus = document.createElement('p');
-          formStatus.className = 'body-copy';
-          formStatus.style.marginTop = '1.5rem';
-          formStatus.style.color = '#6B6857';
-          formStatus.textContent = 'Your message has been received. We will respond with care shortly.';
-          
-          contactForm.appendChild(formStatus);
-          contactForm.reset();
-          
-          setTimeout(() => {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            submitBtn.style.backgroundColor = '';
-            submitBtn.style.borderColor = '';
-            formStatus.remove();
-          }, 6000);
-        } else {
-          throw new Error('Formspree response not OK');
-        }
-      })
       .catch(error => {
-        console.error('Error submitting form:', error);
-        submitBtn.innerHTML = 'ERROR';
-        submitBtn.style.backgroundColor = '#9B6A4E'; // Cinnamon color for error
-        submitBtn.style.borderColor = '#9B6A4E';
-        
-        const formStatus = document.createElement('p');
-        formStatus.className = 'body-copy';
-        formStatus.style.marginTop = '1.5rem';
-        formStatus.style.color = '#9B6A4E';
-        formStatus.textContent = 'Something went wrong. Please email us directly at hello@baeroh.com.';
-        
-        contactForm.appendChild(formStatus);
-        
-        setTimeout(() => {
-          submitBtn.innerHTML = originalText;
-          submitBtn.disabled = false;
-          submitBtn.style.backgroundColor = '';
-          submitBtn.style.borderColor = '';
-          formStatus.remove();
-        }, 6000);
+        console.error('Formspree backup submission failed:', error);
       });
+
+      // Clear the form fields
+      contactForm.reset();
+
+      // Instantly open WhatsApp/redirect (synchronous user event flow prevents browser blocking)
+      setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        window.location.href = whatsappUrl;
+      }, 400);
     });
   }
 });

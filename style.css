@@ -1147,7 +1147,7 @@ footer {
   /* normcph style portfolio structure */
   .work-grid-alternating {
     grid-template-columns: repeat(12, 1fr);
-    gap: 8rem 0;
+    gap: 8rem 3rem;
   }
 
   .work-grid-alternating .work-card {
