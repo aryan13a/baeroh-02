@@ -1,7 +1,7 @@
 /* 
   BAEROH DESIGN STUDIO — Core Interactions
   Reference style: normcph.com (Norm Architects)
-  Version 1.0
+  Version 1.1
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 1. STICKY HEADER & SCROLL BEHAVIOR
   const header = document.querySelector('header');
-  const heroSection = document.querySelector('.hero');
   
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -66,9 +65,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileMenu = document.querySelector('.mobile-nav-menu');
   
   if (mobileToggle && mobileMenu) {
+    // Initial accessibility state
+    mobileToggle.setAttribute('aria-expanded', 'false');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+
     mobileToggle.addEventListener('click', () => {
       const isOpen = mobileToggle.classList.toggle('open');
       mobileMenu.classList.toggle('open', isOpen);
+      mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      mobileMenu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
     
@@ -78,6 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
       link.addEventListener('click', () => {
         mobileToggle.classList.remove('open');
         mobileMenu.classList.remove('open');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
       });
     });
@@ -106,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealElements.forEach(el => revealObserver.observe(el));
   }
 
-  // 5. CONTACT FORM HANDLING (Mock Submission)
+  // 5. CONTACT FORM HANDLING (Formspree & Spam Protection Integration)
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
@@ -115,24 +122,67 @@ document.addEventListener('DOMContentLoaded', () => {
       const submitBtn = contactForm.querySelector('button[type="submit"]');
       const originalText = submitBtn.innerHTML;
       
+      // Basic Honeypot Spam Check
+      const honeypot = contactForm.querySelector('input[name="_honeypot"]');
+      if (honeypot && honeypot.value !== '') {
+        console.warn('Spam submission detected.');
+        return; // silently discard submission
+      }
+      
       submitBtn.innerHTML = 'SENDING...';
       submitBtn.disabled = true;
       
-      // Simulate form submission
-      setTimeout(() => {
-        submitBtn.innerHTML = 'THANK YOU';
-        submitBtn.style.backgroundColor = '#6B6857'; // Olive color for success
-        submitBtn.style.borderColor = '#6B6857';
+      // Formspree AJAX Submission
+      const formData = new FormData(contactForm);
+      const endpoint = contactForm.getAttribute('action') || 'https://formspree.io/f/mjkbwdol';
+      
+      fetch(endpoint, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          submitBtn.innerHTML = 'THANK YOU';
+          submitBtn.style.backgroundColor = '#6B6857'; // Olive color for success
+          submitBtn.style.borderColor = '#6B6857';
+          
+          // Show confirmation message
+          const formStatus = document.createElement('p');
+          formStatus.className = 'body-copy';
+          formStatus.style.marginTop = '1.5rem';
+          formStatus.style.color = '#6B6857';
+          formStatus.textContent = 'Your message has been received. We will respond with care shortly.';
+          
+          contactForm.appendChild(formStatus);
+          contactForm.reset();
+          
+          setTimeout(() => {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            submitBtn.style.backgroundColor = '';
+            submitBtn.style.borderColor = '';
+            formStatus.remove();
+          }, 6000);
+        } else {
+          throw new Error('Formspree response not OK');
+        }
+      })
+      .catch(error => {
+        console.error('Error submitting form:', error);
+        submitBtn.innerHTML = 'ERROR';
+        submitBtn.style.backgroundColor = '#9B6A4E'; // Cinnamon color for error
+        submitBtn.style.borderColor = '#9B6A4E';
         
-        // Show confirmation message
         const formStatus = document.createElement('p');
         formStatus.className = 'body-copy';
         formStatus.style.marginTop = '1.5rem';
-        formStatus.style.color = '#6B6857';
-        formStatus.textContent = 'Your message has been received. We will respond with care shortly.';
+        formStatus.style.color = '#9B6A4E';
+        formStatus.textContent = 'Something went wrong. Please email us directly at hello@baeroh.com.';
         
         contactForm.appendChild(formStatus);
-        contactForm.reset();
         
         setTimeout(() => {
           submitBtn.innerHTML = originalText;
@@ -140,8 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
           submitBtn.style.backgroundColor = '';
           submitBtn.style.borderColor = '';
           formStatus.remove();
-        }, 5000);
-      }, 1500);
+        }, 6000);
+      });
     });
   }
 });

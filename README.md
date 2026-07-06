@@ -7,12 +7,14 @@ Reference style: `normcph.com` (Norm Architects) — editorial, image-led, minim
 ## Project Structure
 
 - `index.html` - Home Page: Hero introduction, brand philosophy, capabilities overview, approach statements, and selected work preview.
-- `studio.html` - Studio (About) Page: Core philosophy, belief list, practice narrative, naming details, and visual journal (moodboard slides).
+- `studio.html` - Studio (About) Page: Core philosophy, belief list (including all protected brand lines), practice narrative, naming details, and visual journal (moodboard slides).
 - `work.html` - Selected Work: Staggered, editorial case study gallery presenting **The Jaipur Workspace** project across 6 room/detailing perspectives.
 - `services.html` - Services Page: Clean capabilities grid summarizing the 6 primary studio workflows and project lifecycle details.
 - `begin.html` - Begin (Contact) Page: Client intake form, timeline roadmap for client collaboration, and studio coordinates.
 - `style.css` - Custom styling library implementing exact color tokens, typography hierarchy (Cormorant Garamond & Montserrat), strict contrast guides, fluid clamp sizing, and responsive grid system.
-- `script.js` - Scroll reveals, sticky headers, mobile menu interactions, and intersection observers.
+- `script.js` - Scroll reveals, sticky headers, mobile menu interactions, accessibility state managers, and Formspree submission handler.
+- `robots.txt` - Allows search engines to crawl and index the site.
+- `sitemap.xml` - Specifies all 5 pages for search engine indexing.
 - `assets/` - Image assets (logo, moodboards, project photos).
 
 ## Design System
@@ -29,6 +31,13 @@ Reference style: `normcph.com` (Norm Architects) — editorial, image-led, minim
 ### Typography
 - **Display**: Cormorant Garamond (Google Fonts)
 - **Body & UI**: Montserrat (Google Fonts)
+
+### Contact Details & Integration
+- **Studio Coordinates**: 247/4, Vashisht Marg, Raja Park, Jaipur, Rajasthan 302004
+- **Phone**: +91 95096 28808
+- **Instagram**: [instagram.com/baerohdesigns](https://www.instagram.com/baerohdesigns/)
+- **Email**: baerohdesigns@gmail.com
+- **Inquiries backend**: Connects directly to Formspree (`action="https://formspree.io/f/mjkbwdol"`) with a hidden honeypot spam protection field and AJAX confirmation state in JavaScript.
 
 ---
 *Baero Hai.*

@@ -1059,11 +1059,13 @@ footer {
   align-items: center;
   gap: 2.5rem;
   transform: translateY(-100%);
-  transition: transform var(--transition-slow);
+  transition: transform var(--transition-slow), visibility var(--transition-slow);
+  visibility: hidden; /* Hide from screen readers and prevent tab focus when closed */
 }
 
 .mobile-nav-menu.open {
   transform: translateY(0);
+  visibility: visible;
 }
 
 .mobile-nav-item {
