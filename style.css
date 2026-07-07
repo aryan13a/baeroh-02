@@ -570,6 +570,259 @@ body.loaded .hero-actions {
 }
 
 /* -----------------------------------------
+   6b. SLIDESHOW HERO ADDITIONS (Homepage)
+----------------------------------------- */
+#hero-slideshow {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-charcoal);
+  display: block; /* Override flex layout of general hero */
+}
+
+@media (max-width: 768px) {
+  #hero-slideshow {
+    height: 90vh; /* 90vh on mobile */
+  }
+}
+
+.hero-slides {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 1.5s cubic-bezier(0.445, 0.05, 0.55, 0.95); /* Slow smooth opacity crossfade */
+  pointer-events: none;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%; /* Slightly top-weighted for architecture shots */
+  filter: brightness(0.65) contrast(1.02) saturate(0.95); /* Editorial warm grade filter */
+  transform: scale(1.06);
+  transition: transform 6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-slide.active img {
+  transform: scale(1);
+}
+
+.hero-gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 45%; /* subtle gradient overlay covers bottom 45% */
+  background: linear-gradient(to top, rgba(20, 16, 14, 0.75) 0%, rgba(20, 16, 14, 0.4) 40%, rgba(20, 16, 14, 0) 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero-overlay-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.hero-container {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+  padding-top: 140px; /* Space below header */
+  padding-bottom: 4.5rem;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .hero-container {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+}
+
+.hero-tagline-wrapper {
+  grid-row: 1;
+  grid-column: 1;
+  pointer-events: auto;
+}
+
+.hero-tagline {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(0.7rem, 1vw, 0.8rem);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--color-taupe);
+  display: inline-block;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.hero-headline-wrapper {
+  grid-row: 3;
+  grid-column: 1;
+  align-self: end;
+  pointer-events: auto;
+  max-width: 750px;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.6rem, 3.8vw, 3.25rem); /* Refined serif layout size */
+  line-height: 1.2;
+  color: #FFFFFF;
+  margin: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  letter-spacing: -0.01em;
+}
+
+.hero-navigation {
+  grid-row: 3;
+  grid-column: 1;
+  align-self: end;
+  margin-top: 2rem;
+  pointer-events: auto;
+}
+
+@media (min-width: 768px) {
+  .hero-navigation {
+    grid-column: 2;
+    align-self: end;
+    justify-self: end;
+    margin-top: 0;
+  }
+}
+
+.hero-dashes {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.hero-dash {
+  width: 18px;
+  height: 2px;
+  background-color: rgba(243, 240, 246, 0.25);
+  cursor: pointer;
+  transition: background-color 0.4s ease, width 0.4s ease;
+}
+
+.hero-dash:hover {
+  background-color: rgba(243, 240, 246, 0.6);
+}
+
+.hero-dash.active {
+  width: 38px;
+  background-color: var(--color-ivory);
+}
+
+.hero-scroll-down {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.hero-scroll-down .scroll-line {
+  width: 1px;
+  height: 35px;
+  background-color: rgba(243, 240, 246, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-scroll-down .scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-ivory);
+  transform: translateY(-100%);
+  animation: scrollDownIndicator 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.hero-scroll-down .scroll-text {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: rgba(243, 240, 246, 0.4);
+}
+
+/* Translucent/Transparent header adaptations when over hero at top */
+body:has(.hero) header:not(.scrolled),
+body.has-hero header:not(.scrolled) {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+body:has(.hero) header:not(.scrolled) .nav-link,
+body.has-hero header:not(.scrolled) .nav-link {
+  color: var(--color-ivory);
+}
+
+body:has(.hero) header:not(.scrolled) .logo-img,
+body.has-hero header:not(.scrolled) .logo-img {
+  filter: invert(1) brightness(100);
+}
+
+body:has(.hero) header:not(.scrolled) .burger-line,
+body.has-hero header:not(.scrolled) .burger-line {
+  background-color: var(--color-ivory);
+}
+
+body:has(.hero) header:not(.scrolled) .nav-cta,
+body.has-hero header:not(.scrolled) .nav-cta {
+  border-color: rgba(243, 240, 246, 0.4);
+  color: var(--color-ivory);
+}
+
+body:has(.hero) header:not(.scrolled) .nav-cta:hover,
+body.has-hero header:not(.scrolled) .nav-cta:hover {
+  background-color: var(--color-ivory);
+  color: var(--color-charcoal);
+  border-color: var(--color-ivory);
+}
+
+/* Text state classes for synced crossfading */
+.hero-tagline.fade-out,
+.hero-headline.fade-out {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* -----------------------------------------
    7. EDITORIAL & BLOCK LAYOUTS
 ----------------------------------------- */
 /* Editorial Intro Row */
